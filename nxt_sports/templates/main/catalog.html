@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КАТАЛОГ | NXT Sports</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@100;300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+        }
+        
+        /* Верхняя черная полоса */
+        .top-bar {
+            background: #000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+        
+        .promo-text {
+            color: #fff;
+            font-weight: 300;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+        
+        .promo-text strong {
+            font-weight: 700;
+            color: #e30613;
+        }
+        
+        .top-auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .top-auth-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .top-auth-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .cart-btn {
+            background: transparent;
+            color: #fff;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+            padding: 5px 10px;
+            transition: all 0.3s;
+        }
+        
+        .cart-btn:hover {
+            color: #e30613;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e30613;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .content-header {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content-header h1 {
+            font-size: 52px;
+            font-weight: 300;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .content-header::after {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 1px;
+            background: #e30613;
+            margin: 20px auto 0;
+        }
+        
+        /* Навигационное меню */
+        .catalog-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .catalog-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 60px;
+        }
+        
+        .catalog-nav li {
+            position: relative;
+        }
+        
+        .catalog-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            letter-spacing: 3px;
+            font-weight: 300;
+            transition: all 0.3s;
+            padding: 10px 0;
+            display: block;
+        }
+        
+        .catalog-nav a:hover,
+        .catalog-nav a.active {
+            color: #e30613;
+        }
+
+        .dropdown-menu {
+    pointer-events: auto; /* Разрешает взаимодействие с меню */
+    transition: all 0.3s ease 0.1s; /* Плавное появление с задержкой */
+}
+
+.dropdown-menu {
+    z-index: 1000; /* Увеличьте z-index чтобы меню было поверх карточек */
+    margin-top: 10px; /* Добавьте отступ от кнопки */
+}
+
+
+.catalog-nav li:hover .dropdown-menu {
+    pointer-events: auto; /* Разрешает взаимодействие при наведении */
+}
+
+.dropdown-menu li {
+    transition: background-color 0.2s ease; /* Плавное изменение фона */
+}
+
+        
+        /* Выпадающее меню для CATALOG */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #333;
+            padding: 15px 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .dropdown-menu li {
+            padding: 10px 30px;
+            text-align: center;
+        }
+        
+        .dropdown-menu li:hover {
+            background-color: rgba(227, 6, 19, 0.2);
+        }
+        
+        .catalog-nav ul li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            animation: fadeInUp 0.3s ease-out;
+        }
+        
+        /* Подсветка текущего раздела */
+        .catalog-nav a[href="catalog.html"] {
+            color: #e30613;
+        }
+        
+        /* Табы каталога */
+        .catalog-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .tab-button {
+            background: transparent;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 300;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            color: #e30613;
+        }
+        .tab-button.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #e30613;
+        }
+        
+        /* Список продуктов */
+        .product-container {
+            padding: 0 50px 100px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .product-item {
+            border: 1px solid #333;
+            padding: 25px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            text-align: center;
+            width: 350px;
+            height: 500px;
+            margin: 0 auto;
+        }
+        
+        .product-item:hover {
+            border-color: #e30613;
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .product-image-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-item:hover .product-image-container {
+            transform: scale(1.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s;
+        }
+        
+        .product-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            color: #e30613;
+            margin-bottom: 10px;
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
+        
+        .product-desc {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+        
+        .product-item:hover .product-title,
+        .product-item:hover .product-price,
+        .product-item:hover .product-desc {
+            color: #e30613;
+        }
+        
+        .product-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .product-about-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .product-about-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .product-add-to-cart {
+            background: #e30613;
+            color: #fff;
+            border: 1px solid #e30613;
+            padding: 8px 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .product-add-to-cart:hover {
+            background: transparent;
+            color: #e30613;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            background-color: #000;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #333;
+            width: 80%;
+            max-width: 900px;
+            position: relative;
+        }
+        
+        .close-modal {
+            color: #fff;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: #e30613;
+        }
+        
+        .car-details {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .car-images {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .car-images img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #333;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .car-images img:hover {
+            border-color: #e30613;
+            transform: scale(1.02);
+        }
+        
+        .car-info {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .car-info h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #e30613;
+        }
+        
+        .car-info h3 {
+            font-size: 20px;
+            margin: 15px 0 10px;
+            color: #e30613;
+        }
+        
+        .car-info p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .car-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .car-specs div {
+            padding: 8px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .car-specs div span:first-child {
+            font-weight: 400;
+            color: #e30613;
+        }
+        
+        .car-achievements {
+            margin-top: 20px;
+        }
+        
+        .car-achievements ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .car-achievements li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+        
+        .car-achievements li:before {
+            content: "•";
+            color: #e30613;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Футер */
+        footer {
+            background: #000;
+            padding: 50px 30px;
+            border-top: 1px solid #333;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-links ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-weight: 300;
+        }
+        
+        .footer-links a:hover {
+            color: #e30613;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 22px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #e30613;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.6;
+            font-weight: 300;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .time-bottom {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 14px;
+            letter-spacing: 3px;
+            opacity: 0.7;
+            font-weight: 300;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <button class="top-auth-btn">REGISTRATION</button>
+                <button class="top-auth-btn">SIGN UP</button>
+                <button class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="content-header">
+            <h1>CATALOG</h1>
+        </div>
+        
+        <!-- Навигация каталога -->
+        <nav class="catalog-nav">
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="team.html">TEAM</a></li>
+                <li>
+                    <a href="catalog.html">CATALOG</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="catalog.html">CATALOG</a></li>
+                        <li><a href="#" onclick="return false;">CUSTOMIZE</a></li>
+                    </ul>
+                    
+                </li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Табы каталога -->
+        <div class="catalog-tabs">
+            <button class="tab-button active" data-tab="nxt-sport">NXT-SPORT</button>
+            <button class="tab-button" data-tab="defend">DEFEND</button>
+            <button class="tab-button" data-tab="bls">BLS</button>
+        </div>
+        
+        <!-- Контейнер продуктов -->
+        <div class="product-container">
+            <div class="product-list">
+                <!-- Товары NXT-SPORT -->
+                <div class="product-item" data-category="nxt-sport">
+                    <div class="product-image-container">
+                        <img src="https://i.drom.ru/foto/album_photos/1/441/2901.jpg" alt="NXT SPORT 100 MKII TYPE 3" class="product-image">
+                    </div>
+                    <h3 class="product-title">NXT SPORT 100 MKII TYPE 3</h3>
+                    <p class="product-price">Комплект 3 детали: 138 897 ₽</p>
+                    <p class="product-desc">Передний бампер: 51 612 ₽ | Боковые юбки: 39 534 ₽ | Задний бампер: 47 817 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="1">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal1">Подробнее</button>
+                    </div>
+                </div>
+                
+                <div class="product-item" data-category="nxt-sport">
+                    <div class="product-image-container">
+                        <img src="https://image.nengun.com/catalogue/1024x768/nengun-8573-02-bnsports-mark_ii_aero_parts_type_3-cb5ff57c.jpg" alt="NXT SPORT 100 MKII TYPE 2" class="product-image">
+                    </div>
+                    <h3 class="product-title">NXT SPORT 100 MKII TYPE 2</h3>
+                    <p class="product-price">Передний бампер: 51 612 ₽</p>
+                    <p class="product-desc">Решетка радиатора: 21 252 ₽ | Боковые юбки: 39 534 ₽ | Задний бампер: 47 817 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="2">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal2">Подробнее</button>
+                    </div>
+                </div>
+                
+                <div class="product-item" data-category="nxt-sport">
+                    <div class="product-image-container">
+                        <img src="https://static.baza.drom.ru/drom/1442835313411_bulletin" alt="NXT SPORT 100 MKII TYPE 1" class="product-image">
+                    </div>
+                    <h3 class="product-title">NXT SPORT 100 MKII TYPE 1</h3>
+                    <p class="product-price">Комплект 3 детали: 141 174 ₽</p>
+                    <p class="product-desc">Передний бампер: 55 407 ₽ | Боковые юбки: 39 534 ₽ | Задний бампер: 46 233 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="3">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal3">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товары DEFEND -->
+                <div class="product-item" data-category="defend">
+                    <div class="product-image-container">
+                        <img src="https://i.pinimg.com/736x/4e/54/ea/4e54ea63a48dba8ee6a6eb890f8094dc.jpg" alt="DEFEND 30/31 Soarer" class="product-image">
+                    </div>
+                    <h3 class="product-title">DEFEND 30/31 Soarer</h3>
+                    <p class="product-price">Комплект 5 деталей: 258 060 ₽</p>
+                    <p class="product-desc">Комплект 6 деталей: 302 082 ₽ | Передний бампер: 66 792 ₽ | Задний бампер: 59 994 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="4">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal4">Подробнее</button>
+                    </div>
+                </div>
+                
+                <div class="product-item" data-category="defend">
+                    <div class="product-image-container">
+                        <img src="https://cdn11.bigcommerce.com/s-4rccvh1/images/stencil/1280x1280/products/695/1246/BN_FC3SBK_006__05051.1638287042.jpg?c=2" alt="DEFEND NSX" class="product-image">
+                    </div>
+                    <h3 class="product-title">DEFEND NSX</h3>
+                    <p class="product-price">Комплект 3 детали: 195 822 ₽</p>
+                    <p class="product-desc">Передний бампер: 74 382 ₽ | Боковые юбки: 59 202 ₽ | Задний бампер: 62 238 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="5">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal5">Подробнее</button>
+                    </div>
+                </div>
+                
+                <!-- Товары BLS -->
+                <div class="product-item" data-category="bls">
+                    <div class="product-image-container">
+                        <img src="https://www.hard-tuning.ru/upload/resize_cache/iblock/a98/1280_815_1f1af60d7a0912bfd83c3fe1448e4d7a1/ipmlbjq052pn0s6nvt5qvjw3uunw1k34.jpg" alt="BLS Silvia S15" class="product-image">
+                    </div>
+                    <h3 class="product-title">BLS Silvia S15</h3>
+                    <p class="product-price">Комплект 8 деталей: 450 846 ₽</p>
+                    <p class="product-desc">Передний бампер: 59 202 ₽ | Задний бампер: 55 407 ₽ | Боковые юбки: 52 734 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="6">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal6">Подробнее</button>
+                    </div>
+                </div>
+                
+                <div class="product-item" data-category="bls">
+                    <div class="product-image-container">
+                        <img src="https://www.tuningblog.eu/wp-content/uploads/2020/09/Nissan-GT-R-R35-Liberty-Walk-Body-Kit-Tuning-13.jpg" alt="BLS R35 GT-R" class="product-image">
+                    </div>
+                    <h3 class="product-title">BLS R35 GT-R</h3>
+                    <p class="product-price">Комплект 8 деталей: 1 133 946 ₽</p>
+                    <p class="product-desc">Передний бампер: 226 182 ₽ | Задний бампер: 219 252 ₽ | Боковые юбки: 205 788 ₽</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="7">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal7">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="team.html">TEAM</a></li>
+                    <li><a href="catalog.html">CATALOG</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    
+    <!-- Модальные окна с детальной информацией -->
+    <!-- NXT SPORT 100 MKII TYPE 3 -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://i.drom.ru/foto/album_photos/1/441/2901.jpg" alt="NXT SPORT 100 MKII TYPE 3">
+                    <img src="https://www.driftworks.com/forum/media/2015-05-09_12-31-03_333-jpg.10612/full" alt="NXT SPORT 100 MKII TYPE 3 вид сбоку">
+                    <img src="https://i.imgur.com/JQlVf8L.jpg" alt="NXT SPORT 100 MKII TYPE 3 задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>NXT SPORT 100 MKII TYPE 3</h2>
+                    <p>Легендарный аэродинамический комплект для Toyota Mark II, созданный для дрифта и трековых гонок. Разработан в 2018 году командой инженеров NXT Sports Japan.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> Углеволокно/FRP</div>
+                        <div><span>Вес комплекта:</span> 24 кг</div>
+                        <div><span>Установка:</span> Профессиональная</div>
+                        <div><span>Совместимость:</span> Toyota Mark II 1992-1996</div>
+                        <div><span>Аэродинамика:</span> Улучшенная на 27%</div>
+                        <div><span>Производство:</span> Япония</div>
+                        <div><span>Срок изготовления:</span> 4-6 недель</div>
+                        <div><span>Гарантия:</span> 2 года</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Комплект включает передний сплиттер с увеличенным вылетом, расширенные колесные арки, боковые юбки с воздуховодами и задний диффузор. Разработан для оптимального охлаждения тормозов и двигателя при экстремальных нагрузках. Все элементы проходят 7-ступенчатую проверку качества.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>1 место D1 Grand Prix 2018 (команда NXT Racing)</li>
+                            <li>3 место Formula Drift Japan 2019</li>
+                            <li>Лучший дрифт-кар года по версии Option Magazine 2020</li>
+                            <li>Рекорд Tsukuba Circuit - 1:03.45 (класс GT500)</li>
+                            <li>Победитель Tokyo Auto Salon 2021 в номинации "Лучший аэродинамический комплект"</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="1" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- NXT SPORT 100 MKII TYPE 2 -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://image.nengun.com/catalogue/1024x768/nengun-8573-02-bnsports-mark_ii_aero_parts_type_3-cb5ff57c.jpg" alt="NXT SPORT 100 MKII TYPE 2">
+                    <img src="https://i.imgur.com/7XqJY9f.jpg" alt="NXT SPORT 100 MKII TYPE 2 вид сбоку">
+                    <img src="https://i.imgur.com/VvTk8zL.jpg" alt="NXT SPORT 100 MKII TYPE 2 задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>NXT SPORT 100 MKII TYPE 2</h2>
+                    <p>Агрессивный аэрокит для уличного использования с элементами гоночной эстетики. Вторая версия легендарного комплекта, выпущенная в 2019 году.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> FRP</div>
+                        <div><span>Вес комплекта:</span> 19 кг</div>
+                        <div><span>Установка:</span> Средней сложности</div>
+                        <div><span>Совместимость:</span> Toyota Mark II 1992-1996</div>
+                        <div><span>Аэродинамика:</span> Улучшенная на 18%</div>
+                        <div><span>Производство:</span> Япония</div>
+                        <div><span>Срок изготовления:</span> 3-5 недель</div>
+                        <div><span>Гарантия:</span> 1 год</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Передний бампер с интегрированными противотуманными фарами, боковые юбки с защитой от сколов, задний бампер с местом под выхлопную систему большого диаметра. Оптимален для daily-драйва с элементами тюнинга. Усиленные крепления и защитные накладки на все элементы.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>2 место Tokyo Auto Salon People's Choice 2019</li>
+                            <li>Лучший дизайн по версии Nismo Festival 2020</li>
+                            <li>Участник выставки Wekfest Japan 2021</li>
+                            <li>Специальный приз JDM Masters 2022</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="2" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- NXT SPORT 100 MKII TYPE 1 -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://static.baza.drom.ru/drom/1442835313411_bulletin" alt="NXT SPORT 100 MKII TYPE 1">
+                    <img src="https://i.imgur.com/9zXqJYf.jpg" alt="NXT SPORT 100 MKII TYPE 1 вид сбоку">
+                    <img src="https://i.imgur.com/VvTk8zl.jpg" alt="NXT SPORT 100 MKII TYPE 1 задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>NXT SPORT 100 MKII TYPE 1</h2>
+                    <p>Базовая версия аэродинамического комплекта для Toyota Mark II, сочетающая в себе стиль и функциональность. Первая версия, выпущенная в 2017 году.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> FRP</div>
+                        <div><span>Вес комплекта:</span> 22 кг</div>
+                        <div><span>Установка:</span> Средней сложности</div>
+                        <div><span>Совместимость:</span> Toyota Mark II 1992-1996</div>
+                        <div><span>Аэродинамика:</span> Улучшенная на 15%</div>
+                        <div><span>Производство:</span> Япония</div>
+                        <div><span>Срок изготовления:</span> 2-4 недели</div>
+                        <div><span>Гарантия:</span> 1 год</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Классический дизайн с элементами спортивного стиля. Передний бампер с увеличенными воздухозаборниками, боковые юбки с защитой от камней, задний бампер с интегрированным диффузором. Идеальный выбор для тех, кто хочет преобразить внешний вид автомобиля без радикальных изменений.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>Участник Tokyo Auto Salon 2018</li>
+                            <li>Специальный приз "Лучший бюджетный комплект" на Osaka Motor Show 2019</li>
+                            <li>Рекомендован журналом Option как лучший выбор для начинающих</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="3" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- DEFEND 30/31 Soarer -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://i.pinimg.com/736x/4e/54/ea/4e54ea63a48dba8ee6a6eb890f8094dc.jpg" alt="DEFEND 30/31 Soarer">
+                    <img src="https://i.imgur.com/9zXqJYf.jpg" alt="DEFEND Soarer вид сбоку">
+                    <img src="https://i.imgur.com/VvTk8zl.jpg" alt="DEFEND Soarer задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>DEFEND 30/31 Soarer</h2>
+                    <p>Эксклюзивный комплект для Toyota Soarer, созданный для максимального прижима на высоких скоростях. Разработан в 2020 году совместно с инженерами Super GT.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> Углеволокно</div>
+                        <div><span>Вес комплекта:</span> 16.5 кг</div>
+                        <div><span>Установка:</span> Профессиональная</div>
+                        <div><span>Совместимость:</span> Toyota Soarer 1991-2000</div>
+                        <div><span>Прижимная сила:</span> +120 кг при 200 км/ч</div>
+                        <div><span>Производство:</span> Япония (ручная работа)</div>
+                        <div><span>Срок изготовления:</span> 6-8 недель</div>
+                        <div><span>Гарантия:</span> 3 года</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Инновационная система воздушных каналов в переднем бампере, регулируемый задний спойлер из карбона, интегрированные диффузоры. Все элементы проходят испытания в аэродинамической трубе. Комплект включает специальные крепления для трековых условий эксплуатации.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>1 место Super Taikyu Series 2020 (класс ST-3)</li>
+                            <li>Рекорд скорости на Fuji Speedway - 285 км/ч</li>
+                            <li>Лучший аэрокит года по версии Best Motoring 2021</li>
+                            <li>3 место Time Attack Tsukuba 2022</li>
+                            <li>Абсолютный чемпион JGTC 2023</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="4" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- DEFEND NSX -->
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://cdn11.bigcommerce.com/s-4rccvh1/images/stencil/1280x1280/products/695/1246/BN_FC3SBK_006__05051.1638287042.jpg?c=2" alt="DEFEND NSX">
+                    <img src="https://i.imgur.com/7XqJY9f.jpg" alt="DEFEND NSX вид сбоку">
+                    <img src="https://i.imgur.com/VvTk8zL.jpg" alt="DEFEND NSX задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>DEFEND NSX</h2>
+                    <p>Элитный аэродинамический комплект для Honda NSX первого поколения. Разработан в 2021 году для участия в престижных трековых соревнованиях.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> Углеволокно/кевлар</div>
+                        <div><span>Вес комплекта:</span> 14.8 кг</div>
+                        <div><span>Установка:</span> Профессиональная</div>
+                        <div><span>Совместимость:</span> Honda NSX 1990-2005</div>
+                        <div><span>Прижимная сила:</span> +150 кг при 250 км/ч</div>
+                        <div><span>Производство:</span> Япония (ручная сборка)</div>
+                        <div><span>Срок изготовления:</span> 8-10 недель</div>
+                        <div><span>Гарантия:</span> 5 лет</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Передний сплиттер с регулируемым углом атаки, боковые диффузоры, интегрированная система охлаждения тормозов, заднее антикрыло с электронной регулировкой. Все элементы проходят рентгенографический контроль качества. Комплект включает сертификат подлинности и табличку с серийным номером.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>1 место Super GT 2021 (класс GT300)</li>
+                            <li>Рекорд Suzuka Circuit - 2:05.34</li>
+                            <li>Лучший дизайн по версии Tokyo Auto Salon 2022</li>
+                            <li>Абсолютный чемпион Time Attack USA 2023</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="5" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- BLS Silvia S15 -->
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://www.hard-tuning.ru/upload/resize_cache/iblock/a98/1280_815_1f1af60d7a0912bfd83c3fe1448e4d7a1/ipmlbjq052pn0s6nvt5qvjw3uunw1k34.jpg" alt="BLS Silvia S15">
+                    <img src="https://i.imgur.com/9zXqJYf.jpg" alt="BLS Silvia S15 вид сбоку">
+                    <img src="https://i.imgur.com/VvTk8zl.jpg" alt="BLS Silvia S15 задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>BLS Silvia S15</h2>
+                    <p>Радикальный аэродинамический комплект для Nissan Silvia S15, созданный специально для дрифта. Выпущен в 2022 году как флагманская модель линейки BLS.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> Углеволокно</div>
+                        <div><span>Вес комплекта:</span> 18.2 кг</div>
+                        <div><span>Установка:</span> Профессиональная</div>
+                        <div><span>Совместимость:</span> Nissan Silvia S15 1999-2002</div>
+                        <div><span>Аэродинамика:</span> Улучшенная на 32%</div>
+                        <div><span>Производство:</span> Япония</div>
+                        <div><span>Срок изготовления:</span> 5-7 недель</div>
+                        <div><span>Гарантия:</span> 2 года</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Агрессивный передний бампер с увеличенными воздухозаборниками, расширенные колесные арки (+50mm), боковые юбки с интегрированными диффузорами, массивный задний диффузор. Все элементы разработаны с учетом особенностей дрифта - усиленные крепления, защита от контакта с покрытием.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>1 место D1 Grand Prix 2022</li>
+                            <li>Чемпион Formula Drift Japan 2023</li>
+                            <li>Лучший дрифт-комплект по версии Option Magazine 2023</li>
+                            <li>Рекорд скорости в дрифте - 172 км/ч</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="6" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- BLS R35 GT-R -->
+    <div id="modal7" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="https://www.tuningblog.eu/wp-content/uploads/2020/09/Nissan-GT-R-R35-Liberty-Walk-Body-Kit-Tuning-13.jpg" alt="BLS R35 GT-R">
+                    <img src="https://i.imgur.com/7XqJY9f.jpg" alt="BLS R35 GT-R вид сбоку">
+                    <img src="https://i.imgur.com/VvTk8zL.jpg" alt="BLS R35 GT-R задняя часть">
+                </div>
+                <div class="car-info">
+                    <h2>BLS R35 GT-R</h2>
+                    <p>Эксклюзивный аэродинамический комплект для Nissan GT-R R35. Флагманская модель 2023 года, сочетающая в себе технологии Формулы 1 и японский тюнинг.</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        <div><span>Материал:</span> Углеволокно/титан</div>
+                        <div><span>Вес комплекта:</span> 22.5 кг</div>
+                        <div><span>Установка:</span> Профессиональная</div>
+                        <div><span>Совместимость:</span> Nissan GT-R R35 2007-2023</div>
+                        <div><span>Прижимная сила:</span> +230 кг при 300 км/ч</div>
+                        <div><span>Производство:</span> Япония (ручная сборка)</div>
+                        <div><span>Срок изготовления:</span> 10-12 недель</div>
+                        <div><span>Гарантия:</span> Пожизненная</div>
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>Активные аэродинамические элементы с электронным управлением, передний сплиттер с системой виртуального удлинения, боковые диффузоры с изменяемой геометрией, заднее антикрыло с автоматической регулировкой. Все элементы проходят испытания на скоростях свыше 350 км/ч. Комплект включает эксклюзивную табличку с номером и сертификатом.</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        <ul>
+                            <li>Абсолютный рекорд Nürburgring - 6:42.3 (2023)</li>
+                            <li>1 место Time Attack World Finals 2023</li>
+                            <li>Лучший технологический комплекс по версии Tokyo Auto Salon 2024</li>
+                            <li>Рекорд скорости - 342 км/ч (модифицированная версия)</li>
+                        </ul>
+                    </div>
+                    <button class="product-add-to-cart" data-id="7" style="margin-top: 20px; width: 100%;">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Фильтрация по категориям
+        document.addEventListener('DOMContentLoaded', function() {
+            // Показываем только NXT-SPORT при первой загрузке
+            document.querySelectorAll('.product-item').forEach(item => {
+                if(item.getAttribute('data-category') !== 'nxt-sport') {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Устанавливаем активную кнопку NXT-SPORT
+            document.querySelector('.tab-button[data-tab="nxt-sport"]').classList.add('active');
+            
+            // Инициализируем корзину
+            let cart = [];
+            const cartCount = document.querySelector('.cart-count');
+            
+            // Функция обновления счетчика корзины
+            function updateCartCount() {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+            }
+            
+            // Обработчик добавления в корзину
+            document.querySelectorAll('.product-add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    const productTitle = this.closest('.product-item').querySelector('.product-title').textContent;
+                    const productPrice = this.closest('.product-item').querySelector('.product-price').textContent;
+                    
+                    // Проверяем, есть ли товар уже в корзине
+                    const existingItem = cart.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            title: productTitle,
+                            price: productPrice,
+                            quantity: 1
+                        });
+                    }
+                    
+                    updateCartCount();
+                    alert('Товар добавлен в корзину');
+                });
+            });
+            
+            // Блокировка перехода в CUSTOMIZE
+            document.querySelectorAll('.dropdown-menu a[href="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Раздел CUSTOMIZE временно недоступен');
+                });
+            });
+        });
+
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Удаляем активный класс у всех кнопок
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Добавляем активный класс текущей кнопке
+                button.classList.add('active');
+                
+                // Получаем выбранную категорию
+                const category = button.getAttribute('data-tab');
+                
+                // Фильтруем товары
+                document.querySelectorAll('.product-item').forEach(item => {
+                    if(item.getAttribute('data-category') === category) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Модальные окна
+        document.querySelectorAll('.product-about-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal');
+                document.getElementById(modalId).style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        document.querySelectorAll('.close-modal').forEach(span => {
+            span.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Обновление времени
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}`;
+            document.getElementById('bottom-time').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT | NXT Sports</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@100;300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            text-transform: uppercase;
+        }
+        
+        /* Верхняя черная полоса */
+        .top-bar {
+            background: #000;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            z-index: 10;
+        }
+        
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
+        
+        .promo-text {
+            color: #fff;
+            font-weight: 300;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+        
+        .promo-text strong {
+            font-weight: 700;
+            color: #e30613;
+        }
+        
+        .top-auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .top-auth-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
+        .top-auth-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 50px 30px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .page-header h1 {
+            font-size: 52px;
+            font-weight: 300;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .page-header::after {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 1px;
+            background: #e30613;
+            margin: 20px auto 0;
+        }
+        
+        /* Навигационное меню */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 60px;
+        }
+        
+        .main-nav li {
+            position: relative;
+        }
+        
+        .main-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            letter-spacing: 3px;
+            font-weight: 300;
+            transition: all 0.3s;
+            padding: 10px 0;
+            display: block;
+        }
+        
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: #e30613;
+        }
+        
+        .main-nav a[href="contact.html"] {
+            color: #e30613;
+        }
+        
+        /* Стили для контактов */
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            padding: 30px;
+            border: 1px solid #333;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .contact-info h3 {
+            font-size: 22px;
+            color: #e30613;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .contact-info p {
+            font-weight: 300;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+        
+        .contact-form {
+            padding: 30px;
+            border: 1px solid #333;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e30613;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: #e30613;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-weight: 300;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #c00511;
+        }
+        
+        /* Футер */
+        footer {
+            background: #000;
+            padding: 50px 30px;
+            border-top: 1px solid #333;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-links ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-weight: 300;
+        }
+        
+        .footer-links a:hover {
+            color: #e30613;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .social-icons a {
+            color: #fff;
+            font-size: 22px;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #e30613;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.6;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <button class="top-auth-btn">REGISTER</button>
+                <button class="top-auth-btn">SIGN IN</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Навигация -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="team.html">TEAM</a></li>
+                <li><a href="service.html">SERVICE</a></li>
+                <li><a href="contact.html" class="active">CONTACT</a></li>
+            </ul>
+        </nav>
+        
+        <div class="page-header">
+            <h1>GET IN TOUCH</h1>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>HEADQUARTERS</h3>
+                <p>
+                    3-5-1 Roppongi, Minato City<br>
+                    Tokyo 106-0032, Japan
+                </p>
+                
+                <h3>CONTACT INFO</h3>
+                <p>
+                    Phone: +81 3-5411-8511<br>
+                    Email: info@nxtsports.jp<br>
+                    Emergency: +81 90-1234-5678
+                </p>
+                
+                <h3>BUSINESS HOURS</h3>
+                <p>
+                    Monday - Friday: 9:00 - 18:00<br>
+                    Saturday: 10:00 - 15:00<br>
+                    Sunday: Closed
+                </p>
+            </div>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">YOUR NAME</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">EMAIL ADDRESS</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">SUBJECT</label>
+                    <input type="text" id="subject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">YOUR MESSAGE</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </div>
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="team.html">TEAM</a></li>
+                    <li><a href="service.html">SERVICE</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    
+    <script>
+        // Обновление времени
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}`;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+        
+        // Обработка формы
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will contact you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
