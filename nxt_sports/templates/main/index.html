@@ -40,6 +40,7 @@
             position: relative;
         }
         
+
         .top-bar-content {
             display: flex;
             justify-content: space-between;
@@ -278,13 +279,14 @@
 </head>
 <body>
     <!-- Верхняя черная полоса -->
-    <div class="top-bar">
         <div class="top-bar-content">
             <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            
             <div class="top-auth-buttons">
-
-                <button class="top-auth-btn">Register</button>
-                <button class="top-auth-btn">Sign In</button>
+                <div class="top-auth-buttons">
+                    <a href="{% url 'registration' %}" class="top-auth-btn">REGISTER</a>
+                    <a href="{% url 'login' %}" class="top-auth-btn">SIGN IN</a>
+                </div>
             </div>
         </div>
     </div>
