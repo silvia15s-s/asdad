@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NXT Sports{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles-base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Добавим общие стили для выпадающих меню */
+        .profile-menu-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .profile-dropdown {
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .profile-dropdown a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+        
+        .profile-dropdown a:hover {
+            background: #f1f1f1;
+        }
+        
+        .profile-btn:hover + .profile-dropdown,
+        .profile-dropdown:hover {
+            display: block;
+        }
+        
+        /* Стили для кнопок */
+        .top-auth-btn, .cart-btn, .profile-btn {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .top-auth-btn:hover, .cart-btn:hover, .profile-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+        
+        .cart-count {
+            margin-left: 5px;
+            background: #ff5500;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                {% if user.is_authenticated %}
+                    <div class="profile-menu-container">
+                        <button class="profile-btn">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <div class="profile-dropdown">
+                            <a href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Профиль</a>
+                            <a href="{% url 'profile' %}?tab=payment"><i class="fas fa-credit-card"></i> Реквизиты</a>
+                            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'registration' %}" class="top-auth-btn">REGISTER</a>
+                    <a href="{% url 'login' %}" class="top-auth-btn">SIGN IN</a>
+                {% endif %}
+                <a href="{% url 'cart' %}" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">{{ cart_items_count|default:0 }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul></ul>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    <script src="{% static 'js/scripts-base.js' %}"></script>
+
+</body>
+</html>

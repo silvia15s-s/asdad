@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@100;300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+}
+
+/* Верхняя черная полоса */
+.top-bar {
+    background: #000;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    z-index: 10;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.promo-text {
+    color: #fff;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.promo-text strong {
+    font-weight: 700;
+    color: #e30613;
+}
+
+.top-auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.top-auth-btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.top-auth-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 30px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.page-header h1 {
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.page-header::after {
+    content: "";
+    display: block;
+    width: 200px;
+    height: 1px;
+    background: #e30613;
+    margin: 20px auto 0;
+}
+
+.about-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.about-text {
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 1px;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border: 1px solid #333;
+}
+
+/* Футер */
+footer {
+    background: #000;
+    padding: 50px 30px;
+    border-top: 1px solid #333;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-links ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    font-weight: 300;
+}
+
+.footer-links a:hover {
+    color: #e30613;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 22px;
+    transition: all 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e30613;
+    transform: translateY(-3px);
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    opacity: 0.6;
+    font-weight: 300;
+}
+
+/* Навигационное меню */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 60px;
+}
+
+.main-nav li {
+    position: relative;
+}
+
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    transition: all 0.3s;
+    padding: 10px 0;
+    display: block;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #e30613;
+}
+
+.main-nav a[href="about.html"] {
+    color: #e30613;
+}

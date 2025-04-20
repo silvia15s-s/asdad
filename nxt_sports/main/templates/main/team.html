@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+
+{% block title %}TEAM | NXT Sports{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles-team.css' %}">
+<div class="main-content">
+    <!-- Навигация -->
+    <nav class="main-nav">
+        <ul>
+            <li><a href="{% url 'index' %}">HOME</a></li>                
+            <li><a href="{% url 'about' %}">ABOUT</a></li>
+            <li><a href="{% url 'team' %}">TEAM</a></li>
+            <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+            <li><a href="{% url 'contact' %}">CONTACT</a></li>
+        </ul>
+    </nav>
+    
+    <div class="page-header">
+        <h1>MEET OUR TEAM</h1>
+    </div>
+    
+    <div class="team-container">
+        <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a" alt="Takashi Yamamoto" class="member-image">
+            <h3 class="member-name">TAKASHI YAMAMOTO</h3>
+            <p class="member-position">ОСНОВАТЕЛЬ И ГЕНЕРАЛЬНЫЙ ДИРЕКТОР</p>
+            <p class="member-bio">Бывший профессиональный дрифтер с более чем 20-летним опытом работы в автомобильной инженерии. Видение Такаши движет инновационным подходом компании к тюнингу производительности.</p>
+        </div>
+        
+        <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1557862921-37829c790f19" alt="Aiko Tanaka" class="member-image">
+            <h3 class="member-name">AIKO TANAKA</h3>
+            <p class="member-position">ГЛАВНЫЙ ДИЗАЙНЕР</p>
+            <p class="member-bio">Айко привносит уникальное сочетание художественного видения и экспертизы в аэродинамику в каждый проект. Ее дизайны получили множество наград на Tokyo Auto Salon.</p>
+        </div>
+        
+        <div class="team-member">
+            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61" alt="Kenji Sato" class="member-image">
+            <h3 class="member-name">KENJI SATO</h3>
+            <p class="member-position">ГЛАВНЫЙ ИНЖЕНЕР</p>
+            <p class="member-bio">Имея опыт работы в инженерии Формулы 1, Кенджи гарантирует, что каждый продукт NXT Sports соответствует самым высоким стандартам производительности и надежности.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

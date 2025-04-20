@@ -1,0 +1,375 @@
+/* Основные стили из вашего проекта */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@100;300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+}
+
+/* Верхняя черная полоса */
+.top-bar {
+    background: #000;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    z-index: 10;
+    position: relative;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.promo-text {
+    color: #fff;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.promo-text strong {
+    font-weight: 700;
+    color: #e30613;
+}
+
+.top-auth-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.top-auth-btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.top-auth-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+.cart-btn {
+    background: transparent;
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+    padding: 5px 10px;
+    transition: all 0.3s;
+}
+
+.cart-btn:hover {
+    color: #e30613;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #e30613;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: calc(100vh - 200px);
+}
+
+.content-header {
+    text-align: center;
+    margin: 50px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.content-header h1 {
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.content-header::after {
+    content: "";
+    display: block;
+    width: 200px;
+    height: 1px;
+    background: #e30613;
+    margin: 20px auto 0;
+}
+
+/* Навигационное меню */
+.catalog-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.catalog-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 60px;
+}
+
+.catalog-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    transition: all 0.3s;
+    padding: 10px 0;
+    display: block;
+}
+
+.catalog-nav a:hover {
+    color: #e30613;
+}
+
+/* Контейнер профиля */
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto 100px;
+    padding: 0 30px;
+    width: 100%;
+}
+
+.profile-content {
+    display: flex;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.profile-avatar {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e30613;
+}
+
+.avatar-placeholder {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #e30613;
+    font-size: 80px;
+    color: #333;
+}
+
+.avatar-upload-btn {
+    background: #e30613;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    width: 100%;
+}
+
+.avatar-upload-btn:hover {
+    background: #c00511;
+}
+
+#avatar-upload {
+    display: none;
+}
+
+.profile-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: #e30613;
+}
+
+.profile-form input,
+.profile-form textarea {
+    background: #111;
+    border: 1px solid #333;
+    padding: 12px 15px;
+    color: white;
+    font-size: 16px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+    border-color: #e30613;
+    outline: none;
+}
+
+.profile-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.profile-save-btn {
+    background: #e30613;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+.profile-save-btn:hover {
+    background: #c00511;
+}
+
+/* Футер */
+footer {
+    background: #000;
+    padding: 50px 30px;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 22px;
+    transition: all 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e30613;
+    transform: translateY(-3px);
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    opacity: 0.6;
+    font-weight: 300;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .profile-content {
+        flex-direction: column;
+    }
+    
+    .profile-avatar {
+        margin-bottom: 30px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .catalog-nav ul {
+        gap: 20px;
+    }
+}
+
+/* Стили для раздела платежных реквизитов */
+.payment-details-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.payment-details-section h3 {
+    color: #e30613;
+    font-size: 18px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Адаптивность для полей карты */
+@media (max-width: 768px) {
+    .payment-details-section .form-row {
+        flex-direction: column;
+    }
+}
