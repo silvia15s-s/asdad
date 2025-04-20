@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM | NXT Sports</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles-team.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <button class="top-auth-btn">REGISTER</button>
+                <button class="top-auth-btn">SIGN IN</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Навигация -->
+        <nav class="main-nav">
+            <ul>
+        <!-- Навигация -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'index' %}">HOME</a></li>                
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+
+                <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            </ul>
+        </nav>
+                <li><a href="team.html" class="active">TEAM</a></li>
+
+            </ul>
+        </nav>
+        
+        <div class="page-header">
+            <h1>MEET OUR TEAM</h1>
+        </div>
+        
+        <div class="team-container">
+            <div class="team-member">
+                <img src="https://www.auto-dd.ru/wp-content/uploads/2024/11/foto-drift-history_01-920x614.jpg" alt="Takashi Yamamoto" class="member-image">
+                <h3 class="member-name">TAKASHI YAMAMOTO</h3>
+                <p class="member-position">FOUNDER & CEO</p>
+                <p class="member-bio">Former professional drifter with over 20 years of experience in automotive engineering. Takashi's vision drives the company's innovative approach to performance tuning.</p>
+            </div>
+
+        <div class="team-container">
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a" alt="Takashi Yamamoto" class="member-image">
+                <h3 class="member-name">TAKASHI YAMAMOTO</h3>
+                <p class="member-position">FOUNDER & CEO</p>
+                <p class="member-bio">Former professional drifter with over 20 years of experience in automotive engineering. Takashi's vision drives the company's innovative approach to performance tuning.</p>
+            </div>
+            
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1557862921-37829c790f19" alt="Aiko Tanaka" class="member-image">
+                <h3 class="member-name">AIKO TANAKA</h3>
+                <p class="member-position">LEAD DESIGNER</p>
+                <p class="member-bio">Aiko brings a unique blend of artistic vision and aerodynamic expertise to every project. Her designs have won multiple awards at Tokyo Auto Salon.</p>
+            </div>
+            
+            <div class="team-member">
+                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61" alt="Kenji Sato" class="member-image">
+                <h3 class="member-name">KENJI SATO</h3>
+                <p class="member-position">CHIEF ENGINEER</p>
+                <p class="member-bio">With a background in Formula 1 engineering, Kenji ensures every NXT Sports product meets the highest standards of performance and reliability.</p>
+            </div>
+        </div>
+    </div>
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    
+</body>
+</html>

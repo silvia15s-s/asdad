@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT | NXT Sports</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles-contact.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <a href="{% url 'registration' %}" class="top-auth-btn">REGISTER</a>
+                <a href="{% url 'login' %}" class="top-auth-btn">SIGN IN</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Навигация -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'index' %}">HOME</a></li>                
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <li><a href="{% url 'team' %}">TEAM</a></li>
+                <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            </ul>
+        </nav>
+        
+        <div class="page-header">
+            <h1>GET IN TOUCH</h1>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>АДРЕС</h3>
+                <p>
+                    3-5-1 Roppongi, Minato City<br>
+                    Tokyo 106-0032, Japan
+                </p>
+                
+                <h3>КОНТАКТНАЯ ИНФОРМАЦИЯ
+                </h3>
+                <p>
+                    ТЕЛЕФОН: +81 3-5411-8511<br>
+                    ПОЧТА: info@nxtsports.jp<br>
+                    ЭКСТРЕННЫЙ ТЕЛЕФОН: +81 90-1234-5678
+                </p>
+                
+                <h3>ЧАСЫ РАБОТЫ</h3>
+                <p>
+                    ПОНЕДЕЛЬНИК - ПЯТНИЦА: 9:00 - 18:00<br>
+                    СУББОТА: 10:00 - 15:00<br>
+                    ВОСКРЕСЕНЬЕ: ЗАКРЫТЫ
+                </p>
+            </div>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">ИМЯ</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">ПОЧТА</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">ПРОДУКТ</label>
+                    <input type="text" id="subject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">ВАЩЕ СООБЩЕНИЕ</label>
+                    <textarea id="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            </form>
+        </div>
+    </div>
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    <script src="{% static 'js/scripts-contact.js' %}"></script>
+</body>
+</html>

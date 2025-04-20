@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NXT Sports</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles-index.css' %}">
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Видео фон -->
+        <video autoplay muted loop class="video-background">
+            <source src="{% static 'media/qwe.mp4' %}" type="video/mp4">
+        </video>
+        
+        <div class="content-overlay">
+            <h1 class="logo">NXT SPORTS</h1>
+            
+            <nav>
+                <ul>
+                    <li><a href="{% url 'index' %}">HOME</a></li>                
+                    <li><a href="{% url 'about' %}">ABOUT</a></li>
+                    <li><a href="{% url 'team' %}">TEAM</a></li>
+                    <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+                    <li><a href="{% url 'contact' %}">CONTACT</a></li>
+                </ul>
+            </nav>
+
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            
+            <div class="time-bottom" id="bottom-time"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/scripts-index.js' %}"></script>
+
+</body>
+</html>
