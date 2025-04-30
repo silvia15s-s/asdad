@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 from main.models import ProductCategory, Product
-from django.contrib.auth.models import User
+from main.models import UserProfile as User
 
 @pytest.mark.django_db
 def test_catalog_view(client):
@@ -41,6 +41,6 @@ def test_product_detail_view(client):
         price=10.0,
         image_url="http://example.com/image.jpg"
     )
-    url = reverse('product_detail', args=[product.id])
+    url = reverse('product-detail', args=[product.id])  # DRF router name is 'product-detail'
     response = client.get(url)
     assert response.status_code == 200

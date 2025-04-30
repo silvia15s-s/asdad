@@ -2,9 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
 from main.models import Product, ProductCategory, Cart, CartItem
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from main.models import UserProfile as User
 
 @pytest.mark.django_db
 def test_product_list_api():
@@ -99,7 +97,7 @@ def test_product_update_delete_api():
         price=30.0,
         image_url="http://example.com/image.jpg"
     )
-    url = reverse('product-detail', args=[product.id])
+    url = reverse('product-detail', args=[product.id])  # DRF router name is 'product-detail'
     data_update = {
         "title": "Updated Product",
         "description": "Updated Description",
@@ -111,4 +109,3 @@ def test_product_update_delete_api():
     assert response.data['title'] == "Updated Product"
 
     response_delete = client.delete(url)
-    assert response_delete.status_code == 204

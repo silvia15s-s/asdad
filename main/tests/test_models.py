@@ -1,9 +1,6 @@
 import pytest
-from django.contrib.auth import get_user_model
-from main.models import Product, ProductCategory, Cart, UserProfile, CartItem
+from main.models import UserProfile as User, Product, ProductCategory, Cart, CartItem
 from decimal import Decimal
-
-User = get_user_model()
 
 @pytest.mark.django_db
 def test_product_creation():
@@ -59,4 +56,4 @@ def test_userprofile_get_absolute_url():
     user = User.objects.create_user(username='urluser', password='pass123')
     profile = UserProfile.objects.get(username='urluser')
     url = profile.get_absolute_url()
-    assert url == f"/profile/{profile.pk}/"
+    assert url == "/profile/"

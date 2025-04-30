@@ -16,7 +16,7 @@ class UserProfile(AbstractUser):
     bank_name = models.CharField(max_length=100, blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'pk': self.pk})
+        return reverse('profile')
 
     def __str__(self):
         return self.username
