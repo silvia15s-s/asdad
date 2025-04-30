@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABOUT | NXT Sports</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles-about.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <a href="{% url 'registration' %}" class="top-auth-btn">REGISTER</a>
+                <a href="{% url 'login' %}" class="top-auth-btn">SIGN IN</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Навигация -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'index' %}">HOME</a></li>                
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <li><a href="{% url 'team' %}">TEAM</a></li>
+                <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            </ul>
+        </nav>
+        
+        <div class="page-header">
+            <h1>OUR STORY</h1>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <p>NXT Sport - это российская компания, которая была основана с целью принести в Россию высококачественные автомобильные обвесы из Японии. Наша история началась несколько лет назад, когда наша команда узнала о существовании уникальных и стильных обвесов для автомобилей, созданных в Японии.</p>
+                
+                <p>Мы были поражены разнообразием и качеством этих обвесов, и сразу же решили, что хотим поделиться этим с российскими автолюбителями. Наша команда начала активно работать над созданием партнерских отношений с японскими производителями и дистрибьюторами, чтобы напрямую доставлять их продукцию в Россию.</p>
+                
+                <p>Наша миссия - предоставлять российским автолюбителям высококачественные и стильные обвесы для автомобилей, созданные в Японии. Мы хотим, чтобы каждый владелец автомобиля мог преобразить свой автомобиль и сделать его неповторимым.</p>
+                
+                <p>В NXT Sport мы ценим:Качество. Мы работаем только с проверенными производителями и тщательно контролируем качество каждого обвеса, чтобы гарантировать его соответствие высоким стандартам.Инновации. Мы постоянно следим за последними тенденциями в мире автомобильных обвесов и стремимся предложить нашим клиентам самые современные и стильные решения.Удовлетворенность клиентов. Мы работаем для того, чтобы каждый клиент был доволен своим выбором и получил именно то, что искал.Профессионализм. Наша команда состоит из опытных специалистов, которые всегда готовы прийти на помощь и предоставить профессиональную консультацию.</p>
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537" alt="NXT Sports Garage" class="about-image">
+        </div>
+    </div>
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    
+    <script src="{% static 'js/scripts-about.js' %}"></script>
+</body>
+</html>

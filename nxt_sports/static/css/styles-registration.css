@@ -1,0 +1,232 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@100;300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-transform: uppercase;
+}
+
+/* Верхняя черная полоса */
+.top-bar {
+    background: #000;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    z-index: 10;
+    position: relative;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.promo-text {
+    color: #fff;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.promo-text strong {
+    font-weight: 700;
+    color: #e30613;
+}
+
+.top-auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.top-auth-btn {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.top-auth-btn:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border: 1px solid #333;
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.auth-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: #e30613;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
+.form-group input {
+    background: transparent;
+    border: 1px solid #333;
+    padding: 12px 15px;
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #e30613;
+}
+
+.auth-submit {
+    background: #e30613;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.auth-submit:hover {
+    background: #c00511;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.auth-switch a {
+    color: #e30613;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Футер */
+footer {
+    background: #000;
+    padding: 30px;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-links ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    font-weight: 300;
+}
+
+.footer-links a:hover {
+    color: #e30613;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 22px;
+    transition: all 0.3s;
+}
+
+.social-icons a:hover {
+    color: #e30613;
+    transform: translateY(-3px);
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    opacity: 0.6;
+    font-weight: 300;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

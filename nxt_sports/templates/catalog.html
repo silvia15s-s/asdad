@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КАТАЛОГ | NXT Sports</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles-catalog.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <a href="{% url 'registration' %}" class="top-auth-btn">REGISTER</a>
+                <a href="{% url 'login' %}" class="top-auth-btn">SIGN IN</a>
+                <button class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="content-header">
+            <h1>CATALOG</h1>
+        </div>
+        
+        <!-- Навигация каталога -->
+        <nav class="catalog-nav">
+            <ul>
+                <li><a href="{% url 'index' %}">HOME</a></li>                
+                <li><a href="{% url 'about' %}">ABOUT</a></li>
+                <li><a href="{% url 'team' %}">TEAM</a></li>
+                <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+                <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Табы каталога -->
+        <div class="catalog-tabs">
+            {% for category in categories %}
+            <button class="tab-button {% if forloop.first %}active{% endif %}" data-tab="{{ category.slug }}">
+                {{ category.name }}
+            </button>
+            {% endfor %}
+        </div>
+        
+        <!-- Контейнер продуктов -->
+        <div class="product-container">
+            <div class="product-list">
+                {% for product in products %}
+                <div class="product-item" data-category="{{ product.category.slug }}">
+                    <div class="product-image-container">
+                        <img src="{{ product.image_url }}" alt="{{ product.title }}" class="product-image">
+                    </div>
+                    <h3 class="product-title">{{ product.title }}</h3>
+                    <p class="product-price">{{ product.price }} ₽</p>
+                    <p class="product-desc">{{ product.description }}</p>
+                    <div class="product-buttons">
+                        <button class="product-add-to-cart" data-id="{{ product.id }}">Добавить в корзину</button>
+                        <button class="product-about-btn" data-modal="modal{{ product.id }}">Подробнее</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальные окна -->
+    {% for product in products %}
+    <div id="modal{{ product.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                    <!-- Дополнительные изображения можно добавить через JSONField -->
+                </div>
+                <div class="car-info">
+                    <h2>{{ product.title }}</h2>
+                    <p>{{ product.details }}</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        {% for key, value in product.specs.items %}
+                        <div><span>{{ key }}:</span> {{ value }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>{{ product.features }}</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        {{ product.achievements|linebreaks }}
+                    </div>
+                    <button class="product-add-to-cart" data-id="{{ product.id }}" style="margin-top: 20px; width: 100%;">
+                        Добавить в корзину
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <!-- Футер и скрипты остаются без изменений -->
+    <script src="{% static 'js/scripts-catalog.js' %}"></script>
+</body>
+</html>
+
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    
+    {% for product in products %}
+    <div id="modal{{ product.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                    <!-- Дополнительные изображения можно хранить в JSONField -->
+                </div>
+                <div class="car-info">
+                    <h2>{{ product.title }}</h2>
+                    <p>{{ product.details }}</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        {% for key, value in product.specs.items %}
+                        <div><span>{{ key }}:</span> {{ value }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>{{ product.features }}</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        {{ product.achievements|linebreaks }}
+                    </div>
+                    <button class="product-add-to-cart" data-id="{{ product.id }}">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <script src="{% static 'js/scripts-catalog.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+{% extends "main/base.html" %}
+
+{% block title %}КАТАЛОГ | NXT Sports{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles-catalog.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="main-content">
+    <div class="content-header">
+        <h1>CATALOG</h1>
+    </div>
+    
+    <!-- Навигация каталога -->
+    <nav class="catalog-nav">
+        <ul>
+            <li><a href="{% url 'index' %}">HOME</a></li>                
+            <li><a href="{% url 'about' %}">ABOUT</a></li>
+            <li><a href="{% url 'team' %}">TEAM</a></li>
+            <li><a href="{% url 'catalog' %}">CATALOG</a></li>
+            <li><a href="{% url 'contact' %}">CONTACT</a></li>
+            <li>
+                <a href="{% url 'cart' %}" class="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-counter">{{ cart_items_count }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Табы каталога -->
+    <div class="catalog-tabs">
+        {% for category in categories %}
+        <button class="tab-button {% if forloop.first %}active{% endif %}" data-tab="{{ category.slug }}">
+            {{ category.name }}
+        </button>
+        {% endfor %}
+    </div>
+    
+    <!-- Контейнер продуктов -->
+    <div class="product-container">
+        {% for category in categories %}
+        <div class="product-list" id="{{ category.slug }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+            {% for product in products %}
+                {% if product.category.slug == category.slug %}
+                <div class="product-item">
+                    <div class="product-image-container">
+                        <img src="{{ product.image_url }}" alt="{{ product.title }}" class="product-image">
+                    </div>
+                    <h3 class="product-title">{{ product.title }}</h3>
+                    <p class="product-price">{{ product.price }} ₽</p>
+                    <p class="product-desc">{{ product.description }}</p>
+                    <div class="product-buttons">
+                        <a href="{% url 'add_to_cart' product.id %}" class="product-add-to-cart" data-product-id="{{ product.id }}">
+                            Добавить в корзину
+                        </a>
+                        <button class="product-about-btn" data-modal="modal{{ product.id }}">Подробнее</button>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Модальные окна -->
+    {% for product in products %}
+    <div id="modal{{ product.id }}" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="car-details">
+                <div class="car-images">
+                    <img src="{{ product.image_url }}" alt="{{ product.title }}">
+                </div>
+                <div class="car-info">
+                    <h2>{{ product.title }}</h2>
+                    <p>{{ product.details }}</p>
+                    
+                    <h3>ХАРАКТЕРИСТИКИ</h3>
+                    <div class="car-specs">
+                        {% for key, value in product.specs.items %}
+                        <div><span>{{ key }}:</span> {{ value }}</div>
+                        {% endfor %}
+                    </div>
+                    
+                    <h3>ОСОБЕННОСТИ</h3>
+                    <p>{{ product.features }}</p>
+                    
+                    <h3>ТУРНИРНЫЕ ДОСТИЖЕНИЯ</h3>
+                    <div class="car-achievements">
+                        {{ product.achievements|linebreaks }}
+                    </div>
+                    <a href="{% url 'add_to_cart' product.id %}" class="product-add-to-cart" data-product-id="{{ product.id }}" style="margin-top: 20px; width: 100%;">
+                        Добавить в корзину
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Обработка табов категорий
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            
+            // Убираем активный класс у всех кнопок
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Добавляем активный класс текущей кнопке
+            this.classList.add('active');
+            
+            // Скрываем все списки продуктов
+            document.querySelectorAll('.product-list').forEach(list => {
+                list.style.display = 'none';
+            });
+            
+            // Показываем нужный список
+            document.getElementById(tabId).style.display = 'grid';
+        });
+    });
+
+    // Обработка модальных окон
+    document.querySelectorAll('.product-about-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const modalId = this.dataset.modal;
+            document.getElementById(modalId).style.display = 'block';
+        });
+    });
+
+    document.querySelectorAll('.close-modal').forEach(span => {
+        span.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+
+    // Обработка добавления в корзину
+    document.querySelectorAll('.product-add-to-cart').forEach(link => {
+        link.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const productId = this.dataset.productId;
+            
+            try {
+                const response = await fetch(`/add-to-cart/${productId}/`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Обновляем счетчик корзины
+                    if (data.cart_items_count !== undefined) {
+                        document.querySelector('.cart-counter').textContent = data.cart_items_count;
+                    }
+                    
+                    // Показываем уведомление
+                    alert('Товар успешно добавлен в корзину!');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Произошла ошибка при добавлении в корзину');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

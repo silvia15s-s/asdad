@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles-cart.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="cart-container">
+    <h1>Your Shopping Cart</h1>
+    
+    {% if cart_items %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>
+                    <img src="{{ item.product.image_url }}" alt="{{ item.product.title }}" width="80">
+                    {{ item.product.title }}
+                </td>
+                <td>{{ item.product.price }}</td>
+                <td>
+                    <div class="quantity-controls">
+                        <button class="qty-btn decrease" data-item-id="{{ item.id }}">-</button>
+                        <span class="quantity">{{ item.quantity }}</span>
+                        <button class="qty-btn increase" data-item-id="{{ item.id }}">+</button>
+                    </div>
+                </td>
+                <td class="item-total">{{ item.total_price }}</td>
+                <td>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <div class="total-section">
+            <span>Total Items:</span>
+            <span id="cart-items-count">{{ cart.total_items }}</span>
+        </div>
+        <div class="total-section">
+            <span>Total Price:</span>
+            <span id="cart-total">{{ cart.total_price }}</span>
+        </div>
+        <a href="#" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <i class="fas fa-shopping-cart fa-4x"></i>
+        <p>Your cart is empty</p>
+        <a href="{% url 'catalog' %}" class="continue-shopping">Continue Shopping</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update quantity with AJAX
+    document.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const itemId = this.dataset.itemId;
+            const action = this.classList.contains('increase') ? 'increase' : 'decrease';
+            
+            fetch(`/update-cart/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({action: action})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update UI
+                    const row = this.closest('tr');
+                    row.querySelector('.quantity').textContent = data.quantity;
+                    row.querySelector('.item-total').textContent = '$' + data.item_total;
+                    document.getElementById('cart-total').textContent = '$' + data.cart_total;
+                    document.getElementById('cart-items-count').textContent = data.cart_items_count;
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN | NXT Sports</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/styles-login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+    <!-- Верхняя черная полоса -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <div class="promo-text">HIGH QUALITY <strong>PERFORMANCE | NXT SPORTS JAPAN</strong></div>
+            <div class="top-auth-buttons">
+                <button class="top-auth-btn" onclick="window.location.href='registration.html'">REGISTER</button>
+            </div>
+        </div>
+    </div>
+
+            <!-- Навигация -->
+            <nav class="main-nav">
+                <ul>
+                </ul>
+            </nav>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <div class="auth-container">
+            <h1 class="auth-title">SIGN IN</h1>
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">ПОЧТА</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">ПАРОЛЬ</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="forgot-password">
+                        <a href="#">ВОСТАНОВИТЬ ПОРОЛЬ?</a>
+                    </div>
+                </div>
+                <button type="submit" class="auth-submit">LOGIN</button>
+            </form>
+            <div class="auth-switch">
+                У ВАС НЕТ АККАУНТА? <a href="registration.html">ЗАРЕГЕСТРИРУЙТЕСЬ</a>
+            </div>
+        </div>
+    </div>
+            
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+                </ul>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2025 NXT SPORTS JAPAN. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+    
+    <script src="{% static 'js/scripts-login.js' %}"></script>
+</body>
+</html>
