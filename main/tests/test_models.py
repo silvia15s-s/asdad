@@ -39,3 +39,24 @@ def test_cart_creation():
     assert cart.total_items == 1
     assert cart_item.total_price == Decimal('199.98')
     assert str(cart) == f"Cart #{cart.id} for testuser"
+
+@pytest.mark.django_db
+def test_userprofile_fields():
+    User.objects.filter(username='profileuser').delete()
+    user = User.objects.create_user(username='profileuser', password='pass123')
+    profile = UserProfile.objects.get(username='profileuser')
+    profile.phone = "1234567890"
+    profile.address = "Test Address"
+    profile.card_number = "1111222233334444"
+    profile.save()
+    assert profile.phone == "1234567890"
+    assert profile.address == "Test Address"
+    assert profile.card_number == "1111222233334444"
+
+@pytest.mark.django_db
+def test_userprofile_get_absolute_url():
+    User.objects.filter(username='urluser').delete()
+    user = User.objects.create_user(username='urluser', password='pass123')
+    profile = UserProfile.objects.get(username='urluser')
+    url = profile.get_absolute_url()
+    assert url == f"/profile/{profile.pk}/"
