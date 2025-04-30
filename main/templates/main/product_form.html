@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/styles-admin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-panel">
+    <nav class="admin-nav">
+        <a href="{% url 'catalog' %}" class="nav-link">Каталог</a>
+        {% if action == 'Создать товар' %}
+        <a href="{% url 'create_product' %}" class="nav-link active">Добавить товар</a>
+        {% else %}
+        <a href="{% url 'catalog' %}" class="nav-link active">Редактировать товар</a>
+        {% endif %}
+    </nav>
+    <main class="admin-main">
+        <h1>{{ action }}</h1>
+        <form method="post" class="admin-form">
+            {% csrf_token %}
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">{{ action }}</button>
+                <a href="{% url 'catalog' %}" class="btn btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}

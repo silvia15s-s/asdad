@@ -1,6 +1,22 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile
+from .models import Product
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['category', 'title', 'description', 'price', 'image_url', 'details', 'material', 'weight', 'installation', 'compatibility', 'features', 'achievements']
+
+class ManagerProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['title', 'description', 'price', 'image_url']
+
+class ProductSpecsForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['details', 'material', 'weight', 'installation', 'compatibility']
 
 class ProfileForm(forms.ModelForm):
     class Meta:

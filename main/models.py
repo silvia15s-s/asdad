@@ -36,6 +36,10 @@ class Product(models.Model):
     image_url = models.URLField()
     details = models.TextField()
     specs = models.JSONField(default=dict)
+    material = models.CharField(max_length=200, blank=True, null=True)
+    weight = models.CharField(max_length=100, blank=True, null=True)
+    installation = models.TextField(blank=True, null=True)
+    compatibility = models.TextField(blank=True, null=True)
     features = models.TextField()
     achievements = models.TextField()
     

@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/styles-admin.css' %}">
+{% endblock %}
+
+<div class="admin-panel">
+    <nav class="admin-nav">
+        <a href="{% url 'admin_product_list' %}" class="nav-link active">Товары</a>
+        <a href="{% url 'admin_product_create' %}" class="nav-link">Добавить товар</a>
+    </nav>
+    <main class="admin-main">
+        <h1>Список товаров</h1>
+        {% if products %}
+        <div class="product-list">
+            {% for product in products %}
+            <div class="product-card">
+                <h2>{{ product.title }}</h2>
+                <p><strong>Категория:</strong> {{ product.category.name }}</p>
+                <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+            <div class="product-actions">
+                <a href="{% url 'admin_product_edit' product.id %}" class="btn btn-edit">Редактировать</a>
+                <a href="{% url 'admin_product_delete' product.id %}" class="btn btn-delete">Удалить</a>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>Товары не найдены.</p>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

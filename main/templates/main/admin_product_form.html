@@ -1,0 +1,43 @@
+{% extends "main/base.html" %}
+{% block content %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/styles-admin.css' %}">
+{% endblock %}
+
+<div class="admin-panel">
+    <nav class="admin-nav">
+        <a href="{% url 'admin_product_list' %}" class="nav-link">Товары</a>
+        {% if simple_form %}
+        <a href="{% url 'admin_product_list' %}" class="nav-link">Вернуться к списку</a>
+        {% else %}
+        <a href="{% url 'admin_product_create' %}" class="nav-link active">Добавить товар</a>
+        {% endif %}
+    </nav>
+    <main class="admin-main">
+        <h1>{{ action }} товар</h1>
+        <form method="post" class="admin-form">
+            {% csrf_token %}
+            <div class="form-fields">
+                {% if simple_form %}
+                    <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label><br>
+                    {{ form.title }}<br><br>
+                    <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label><br>
+                    {{ form.description }}<br><br>
+                    <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label><br>
+                    {{ form.price }}<br><br>
+                    <label for="{{ form.image_url.id_for_label }}">{{ form.image_url.label }}</label><br>
+                    {{ form.image_url }}<br><br>
+                {% else %}
+                    {{ form.as_p }}
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">{{ action }}</button>
+                <a href="{% url 'admin_product_list' %}" class="btn btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}

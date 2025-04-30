@@ -2,10 +2,31 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, ProductCategory, Cart, CartItem
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, CustomUserCreationForm
+from .forms import ProfileForm, CustomUserCreationForm, ProductForm
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 import json
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status, viewsets
+from .serializers import ProductSerializer
+from .models import ProductCategory
+from .serializers import ProductCategorySerializer
+
+class ProductListAPIView(APIView):
+    def get(self, request):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductCategoryViewSet(viewsets.ModelViewSet):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
 
 def index(request):
     return render(request, 'main/index.html')
@@ -35,9 +56,28 @@ def catalog(request):
         'cart_items_count': cart_items_count
     })
 
+@login_required
+def create_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog')
+    else:
+        form = ProductForm()
+    return render(request, 'main/product_form.html', {'form': form, 'action': 'Создать товар'})
 
-
-
+@login_required
+def edit_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'main/product_form.html', {'form': form, 'action': 'Редактировать товар'})
 
 @login_required
 def remove_from_cart(request, item_id):
@@ -128,12 +168,6 @@ def add_to_cart(request, product_id):
             'cart_items_count': cart.total_items
         })
     return redirect(request.META.get('HTTP_REFERER', 'catalog'))
-
-@login_required
-def remove_from_cart(request, item_id):
-    cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
-    cart_item.delete()
-    return redirect('cart')
 
 @login_required
 @require_POST

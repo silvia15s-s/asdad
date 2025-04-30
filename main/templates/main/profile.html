@@ -92,6 +92,12 @@
                         {{ form.bank_name.errors }}
                     </div>
                 </div>
+
+                {% if user.is_staff %}
+                <div class="admin-link-section" style="margin-top: 20px;">
+                    <a href="{% url 'admin_product_add_panel' %}" class="btn btn-submit">Панель добавления товаров (Админ)</a>
+                </div>
+                {% endif %}
                 
                 <button type="submit" class="profile-save-btn">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
             </form>

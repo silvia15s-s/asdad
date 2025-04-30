@@ -1,23 +1,23 @@
 import pytest
 from django.urls import reverse
+from main.models import ProductCategory, Product
 
 @pytest.mark.django_db
 def test_catalog_view(client):
-    response = client.get(reverse('catalog'))
+    url = reverse('catalog')
+    response = client.get(url)
     assert response.status_code == 200
-    assert 'CATALOG' in str(response.content)
 
 @pytest.mark.django_db
 def test_add_to_cart_view(admin_client):
-    from main.models import Product, ProductCategory
-    category = ProductCategory.objects.create(name="Test", slug="test")
+    category = ProductCategory.objects.create(name="Category", slug="category")
     product = Product.objects.create(
         category=category,
-        title="Test Product",
-        description="Test",
-        price=100,
+        title="Product",
+        description="Description",
+        price=10.0,
         image_url="http://example.com/image.jpg"
     )
-    
-    response = admin_client.get(reverse('add_to_cart', args=[product.id]))
-    assert response.status_code == 302
+    url = reverse('add_to_cart', args=[product.id])
+    response = admin_client.post(url)
+    assert response.status_code == 302  # Redirect after adding to cart

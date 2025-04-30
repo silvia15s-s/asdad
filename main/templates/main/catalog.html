@@ -56,6 +56,9 @@
                             Добавить в корзину
                         </a>
                         <button class="product-about-btn" data-modal="modal{{ product.id }}">Подробнее</button>
+                        {% if user.is_staff %}
+                        <a href="{% url 'admin_product_edit' product.id %}" class="btn btn-edit" style="margin-left: 10px;">Редактировать</a>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
@@ -79,9 +82,18 @@
                     
                     <h3>ХАРАКТЕРИСТИКИ</h3>
                     <div class="car-specs">
-                        {% for key, value in product.specs.items %}
-                        <div><span>{{ key }}:</span> {{ value }}</div>
-                        {% endfor %}
+                        {% if product.material %}
+                        <div><span>Материал:</span> {{ product.material }}</div>
+                        {% endif %}
+                        {% if product.weight %}
+                        <div><span>Вес комплекта:</span> {{ product.weight }}</div>
+                        {% endif %}
+                        {% if product.installation %}
+                        <div><span>Установка:</span> {{ product.installation }}</div>
+                        {% endif %}
+                        {% if product.compatibility %}
+                        <div><span>Совместимость:</span> {{ product.compatibility }}</div>
+                        {% endif %}
                     </div>
                     
                     <h3>ОСОБЕННОСТИ</h3>

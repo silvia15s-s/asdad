@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/styles-admin.css' %}">
+{% endblock %}
+
+<div class="admin-panel">
+    <nav class="admin-nav">
+        <a href="{% url 'admin_product_list' %}" class="nav-link">Товары</a>
+        <a href="{% url 'admin_product_create' %}" class="nav-link">Добавить товар</a>
+    </nav>
+    <main class="admin-main">
+        <h1>{{ action }}: {{ product.title }}</h1>
+        <form method="post" class="admin-form">
+            {% csrf_token %}
+            <div class="form-fields">
+                {{ form.as_p }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-submit">{{ action }}</button>
+                <a href="{% url 'admin_product_list' %}" class="btn btn-cancel">Отмена</a>
+            </div>
+        </form>
+    </main>
+</div>
+{% endblock %}
